@@ -26,67 +26,36 @@ First determine whether the user is:
 
 If the starting point is apparent from the user's request and environment, proceed without asking them to classify it.
 
-## Phase 2: conduct an adaptive interview
+## Phase 2: discover the goal conversationally
 
-Ask questions in small batches of no more than three. Do not dump a questionnaire on the user. Skip questions already answered by the repository or earlier replies. Prefer plain language and offer examples when the user may not know the terminology.
+There is no predetermined questionnaire. Decide each question during the conversation based on the user's goal, what you have learned, and the single most important uncertainty preventing useful progress.
 
-Gather enough information to answer all of the following:
+Begin with the user's own description, even if it is brief, non-technical, or aspirational. Meet them at their level. Ask one natural question at a time by default; ask at most three together only when the questions are closely related and easy to answer. Explain unfamiliar choices in terms of their practical effect rather than jargon.
 
-### Outcome
+Questions must help the user clarify the outcome, not make them design the harness for you. Do not ask about context managers, tool registries, guardrails, loops, verifiers, frameworks, APIs, CI, data schemas, or other implementation concepts unless the user already works at that level or the decision genuinely requires their preference. Infer technical details from the goal, the environment, available evidence, and sensible defaults. When several approaches would work, recommend one and explain the user-visible tradeoff simply.
 
-- What should the agent reliably accomplish?
-- Who will use it, and what does a successful result look like?
-- What is explicitly out of scope?
+Choose follow-up questions dynamically. Useful questions often explore a concrete example, the people involved, what happens before and after the desired result, what a good result feels like, what could go wrong, or which actions should remain under human control. These are examples of reasoning directions, not a script, required topics, or wording to repeat.
 
-### Working environment
+After every answer, update your understanding and decide whether another question would materially change the design. Do not continue interviewing merely to fill fields. Inspect files or perform safe research when that can answer something more reliably than asking the user.
 
-- Is this a new project, an existing project, or a standalone/cross-project harness?
-- Which languages, frameworks, platforms, and package managers are involved?
-- Where will the harness run: local machine, CI, cloud runtime, or a combination?
-- Which coding agents must it support (for example Codex, Claude Code, or both)?
-- For a new project, what is the smallest usable first version of the product itself, and which technical choices should the agent recommend?
+Internally, translate what you learn into the five harness parts. Identify gaps in context, capabilities, safety, operation, and proof of success without requiring the user to know those categories. The five-part model is your design responsibility, not the user's questionnaire.
 
-### Context manager
+The discovery phase is complete when you can explain, in the user's language:
 
-- Which sources are authoritative: repository files, documentation, tickets, databases, APIs, or user-supplied material?
-- What information changes between tasks, and what remains stable?
-- What must never enter model context?
+- what they are trying to make possible;
+- what the first useful version will do;
+- the important boundaries or human decisions;
+- how they will recognize that it is working.
 
-### Tool registry
-
-- Which commands, APIs, MCP servers, browsers, databases, or external services are needed?
-- Which tools are read-only, which mutate state, and which require credentials or human approval?
-- Are there preferred or forbidden tools?
-
-### Guardrails
-
-- What may the agent change autonomously?
-- Which actions require confirmation: deployments, purchases, messages, destructive operations, production writes, or access to sensitive data?
-- What limits apply to time, cost, retries, scope, and external side effects?
-
-### Loop
-
-- Is the work interactive, event-driven, scheduled, or long-running?
-- When should the agent ask a question, retry, roll back, hand off, or stop?
-- How should progress and durable task state be recorded?
-
-### Verifier
-
-- Which automated tests, linters, type checks, evals, previews, or acceptance checks prove success?
-- What requires human review?
-- What evidence should the agent present before declaring completion?
-
-Do not ask the user to design implementation details that can be inferred safely. If the user is uncertain, recommend a conservative default and state the tradeoff.
-
-The interview is complete when you can state a concrete goal, a proposed implementation for all five parts, the important boundaries, and observable acceptance criteria. If a critical answer is missing, continue interviewing.
+You must also have enough evidence to design all five harness parts. If a missing decision would materially change the outcome, ask the next most helpful question. Otherwise, make a clearly stated, reversible assumption and proceed.
 
 ## Phase 3: propose the harness contract
 
-Before editing, present a concise harness contract containing:
+Before editing, present a concise proposal in the user's language. Do not make the user review an unexplained technical specification. Include:
 
 - the target outcome;
 - assumptions;
-- the design of each of the five parts;
+- how the system will obtain what it needs, do the work safely, repeat or recover, and check its result; map these points to the five harness parts only when that terminology helps the user;
 - files and services you expect to create or change;
 - for a new project, the proposed directory, starter architecture, and boundary between product code and harness infrastructure;
 - approval gates and external side effects;
