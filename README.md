@@ -16,6 +16,12 @@ Open Codex, Claude Code, Cursor, or another coding agent that can read web pages
 
 The user does not need to understand harness terminology or answer a technical questionnaire. The agent decides what to ask as the conversation develops, using the five parts as its internal design model.
 
+If the user pastes only the URL, the agent begins with:
+
+> What would you like to make possible?
+
+This does not assume that a project already exists. The user can answer with a rough idea, a problem, a wish, or something they have already started.
+
 You can use it in any of three situations:
 
 1. **Start with an idea:** open the agent in the parent directory where you want the new project created. Tell it your idea after the URL in your own words. It will ask only the questions that become useful, recommend undecided technical choices, create the project and harness, verify them, and guide the first task.

@@ -16,21 +16,31 @@ Every harness must deliberately address these five parts:
 
 Treat the model as a replaceable component inside this harness. Do not confuse a long system prompt with a complete harness.
 
-## Phase 1: determine the starting point
+## Opening the conversation
 
-First determine whether the user is:
+If the user supplied this protocol URL without describing what they want, begin with one welcoming, non-technical question:
+
+> What would you like to make possible?
+
+Do not open by asking which project, product, agent, harness, technology, or outcome they want. Do not ask whether something already exists. Their answer may be a problem, wish, rough idea, repeated frustration, personal ambition, organizational need, or an existing piece of work. All are valid starting points.
+
+If the user already described what they want alongside the URL, acknowledge that description and ask only the most useful next question, if one is needed.
+
+## Phase 1: understand the starting point
+
+From the conversation and available environment, work out whether the user is:
 
 - **Equipping an existing project** — inspect the current repository and existing agent instructions before asking questions. Look for files such as `AGENTS.md`, `CLAUDE.md`, `README`, package manifests, test configuration, CI, scripts, environment examples, and architecture documentation. Preserve useful existing conventions and do not overwrite unrelated work.
 - **Starting a new project** — do not require a repository to exist. Ask what they want to create, who it is for, and where the new project directory should live. Help choose a project name and suitable stack if those are undecided. The proposed contract must distinguish the initial product scaffold from its agent harness. After approval, create the project directory, initialize version control when available, and build both the agreed starter and its harness.
 - **Creating a standalone harness** — if the harness will operate across projects or outside a conventional code repository, identify its runtime, working directory, inputs, outputs, and durable state location. Create a dedicated workspace for it after approval.
 
-If the starting point is apparent from the user's request and environment, proceed without asking them to classify it.
+Do not make the user classify their starting point. Infer it naturally as their goal becomes clearer. If it remains ambiguous and the distinction actually affects the next step, ask about what they have already tried or created in ordinary language.
 
 ## Phase 2: discover the goal conversationally
 
 There is no predetermined questionnaire. Decide each question during the conversation based on the user's goal, what you have learned, and the single most important uncertainty preventing useful progress.
 
-Begin with the user's own description, even if it is brief, non-technical, or aspirational. Meet them at their level. Ask one natural question at a time by default; ask at most three together only when the questions are closely related and easy to answer. Explain unfamiliar choices in terms of their practical effect rather than jargon.
+Begin with the user's own description, even if it is brief, non-technical, or aspirational. Meet them at their level. Ask one natural question at a time by default; ask at most three together only when the questions are closely related and easy to answer. Explain unfamiliar choices in terms of their practical effect rather than jargon. Never use the word "project" merely as a generic label for what the user wants; use their own words until it is clear that a project exists or should be created.
 
 Questions must help the user clarify the outcome, not make them design the harness for you. Do not ask about context managers, tool registries, guardrails, loops, verifiers, frameworks, APIs, CI, data schemas, or other implementation concepts unless the user already works at that level or the decision genuinely requires their preference. Infer technical details from the goal, the environment, available evidence, and sensible defaults. When several approaches would work, recommend one and explain the user-visible tradeoff simply.
 
